@@ -7,7 +7,6 @@ defmodule Tussle.Cache.Memory do
     GenServer.start_link(
       __MODULE__,
       [
-        {:ets_table_name, :tussle_cache_table},
         {:log_limit, 1_000_000},
         {:config, config}
       ],
@@ -63,9 +62,11 @@ defmodule Tussle.Cache.Memory do
   end
 
   def init(args) do
-    [{:ets_table_name, ets_table_name}, {:log_limit, log_limit}, {:config, config}] = args
+    [{:log_limit, log_limit}, {:config, config}] = args
 
-    :ets.new(ets_table_name, [:named_table, :set, :private])
+    # One unnamed table per cache process, so several controllers can each
+    # run their own memory cache in the same VM.
+    ets_table_name = :ets.new(:tussle_cache_table, [:set, :private])
 
     {:ok, %{log_limit: log_limit, ets_table_name: ets_table_name, config: config}}
   end

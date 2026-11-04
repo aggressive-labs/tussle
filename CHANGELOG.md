@@ -1,5 +1,15 @@
 # Changelog
 
+## v0.4.1
+
+### Bug Fixes
+
+- **Fixed running several controllers on the memory cache**: Tussle.Cache.Memory
+  created a single VM-wide named ETS table, so starting a second controller
+  backed by it crashed with "table name already exists". Each cache process now
+  owns its own private table, letting any number of controllers use the memory
+  cache in the same application.
+
 ## v0.4.0
 
 ### Protocol

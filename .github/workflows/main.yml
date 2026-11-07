@@ -20,7 +20,7 @@ jobs:
                 otp: ['29.0']
                 elixir: ['1.20']
         steps:
-            - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+            - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
             - uses: erlef/setup-beam@54075bcc5e249e4758d363f27d099f55d843f124 # v1
               with:
@@ -41,7 +41,7 @@ jobs:
         permissions:
             contents: write
         steps:
-            - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+            - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
             - uses: erlef/setup-beam@54075bcc5e249e4758d363f27d099f55d843f124 # v1
               with:
@@ -55,7 +55,7 @@ jobs:
               run: mix hex.build
 
             - name: Create GitHub release
-              uses: softprops/action-gh-release@3bb12739c298aeb8a4eeaf626c5b8d85266b0e65 # v2
+              uses: softprops/action-gh-release@efb35369e0ad2afab669f228072c1b0d510eae64 # v3.0.3
               with:
                   files: tussle-*.tar
                   generate_release_notes: true
@@ -70,6 +70,6 @@ jobs:
           pull-requests: write
         steps:
             - name: Contribute List
-              uses: akhilmhdh/contributors-readme-action@1ff4c56187458b34cd602aee93e897344ce34bfc # v2.3.10
+              uses: akhilmhdh/contributors-readme-action@83ea0b4f1ac928fbfe88b9e8460a932a528eb79f # v2.3.11
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

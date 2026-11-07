@@ -1,9 +1,9 @@
 # Tussle
 
-[![Tests](https://github.com/jvantuyl/tussle/actions/workflows/main.yml/badge.svg)](https://github.com/jvantuyl/tussle/actions/workflows/main.yml)
+[![Tests](https://github.com/aggressive-labs/tussle/actions/workflows/main.yml/badge.svg)](https://github.com/aggressive-labs/tussle/actions/workflows/main.yml)
 [![Hex.pm](https://img.shields.io/hexpm/v/tussle.svg)](https://hex.pm/packages/tussle)
 [![HexDocs](https://img.shields.io/badge/hex-docs-blue)](https://hexdocs.pm/tussle/)
-[![GitHub stars](https://img.shields.io/github/stars/jvantuyl/tussle.svg)](https://github.com/jvantuyl/tussle/stargazers)
+[![GitHub stars](https://img.shields.io/github/stars/aggressive-labs/tussle.svg)](https://github.com/aggressive-labs/tussle/stargazers)
 [![Sponsor](https://img.shields.io/badge/sponsor-%E2%9D%A4-lightgrey)](https://github.com/sponsors/jvantuyl)
 
 An implementation of a *[tus](https://tus.io/)* **server** in Elixir

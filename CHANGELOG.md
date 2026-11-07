@@ -1,5 +1,12 @@
 # Changelog
 
+## v0.4.2
+
+### Housekeeping
+
+- Moved the repository to the `aggressive-labs` GitHub organization. Package
+  metadata and README links now point at the new home.
+
 ## v0.4.1
 
 ### Bug Fixes

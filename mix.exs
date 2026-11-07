@@ -2,7 +2,7 @@ defmodule Tussle.MixProject do
   use Mix.Project
 
   @version File.read!("VERSION") |> String.trim()
-  @source_url "https://github.com/jvantuyl/tussle"
+  @source_url "https://github.com/aggressive-labs/tussle"
 
   def project do
     [

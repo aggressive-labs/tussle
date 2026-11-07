@@ -13,19 +13,36 @@ env:
 
 jobs:
     test:
-        runs-on: ubuntu-latest
+        runs-on: [self-hosted, build00]
         name: Run tests
-        strategy:
-            matrix:
-                otp: ['29.0']
-                elixir: ['1.20']
+        env:
+            MIX_ENV: test
         steps:
-            - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+            - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
 
-            - uses: erlef/setup-beam@54075bcc5e249e4758d363f27d099f55d843f124 # v1
+            - name: Detect ImageOS (self-hosted runner)
+              run: |
+                  . /etc/os-release
+                  case "${ID}-${VERSION_ID}" in
+                    ubuntu-22.04) IMAGE_OS=ubuntu22 ;;
+                    *)            IMAGE_OS=ubuntu24 ;;
+                  esac
+                  echo "ImageOS=${IMAGE_OS}" >> "${GITHUB_ENV}"
+
+            # Toolchain versions come from .mise.toml. build00 is Debian, so tell
+            # mise to use Bob's Ubuntu 24.04 OTP build instead of compiling from source.
+            - name: Install toolchain with mise
+              uses: jdx/mise-action@b44d12e7d0d8ee7461bb893e1b1993500433185b # v5.2.7
+              env:
+                  MISE_ERLANG_PRECOMPILED_OS: ubuntu-24.04
               with:
-                  otp-version: ${{ matrix.otp }}
-                  elixir-version: ${{ matrix.elixir }}
+                  install_args: erlang elixir
+                  cache: false
+
+            - name: Install hex & rebar
+              run: |
+                  mix local.hex --force
+                  mix local.rebar --force
 
             - name: Install dependencies
               run: mix deps.get
@@ -34,19 +51,36 @@ jobs:
               run: mix test
 
     release:
-        runs-on: ubuntu-latest
+        runs-on: [self-hosted, build00]
         name: Build and release
         needs: test
         if: startsWith(github.ref, 'refs/tags/v')
         permissions:
             contents: write
         steps:
-            - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+            - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
 
-            - uses: erlef/setup-beam@54075bcc5e249e4758d363f27d099f55d843f124 # v1
+            - name: Detect ImageOS (self-hosted runner)
+              run: |
+                  . /etc/os-release
+                  case "${ID}-${VERSION_ID}" in
+                    ubuntu-22.04) IMAGE_OS=ubuntu22 ;;
+                    *)            IMAGE_OS=ubuntu24 ;;
+                  esac
+                  echo "ImageOS=${IMAGE_OS}" >> "${GITHUB_ENV}"
+
+            - name: Install toolchain with mise
+              uses: jdx/mise-action@b44d12e7d0d8ee7461bb893e1b1993500433185b # v5.2.7
+              env:
+                  MISE_ERLANG_PRECOMPILED_OS: ubuntu-24.04
               with:
-                  otp-version: '29.0'
-                  elixir-version: '1.20'
+                  install_args: erlang elixir
+                  cache: false
+
+            - name: Install hex & rebar
+              run: |
+                  mix local.hex --force
+                  mix local.rebar --force
 
             - name: Install dependencies
               run: mix deps.get

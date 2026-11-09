@@ -1,5 +1,20 @@
 # Changelog
 
+## v0.5.0
+
+### Bug Fixes
+
+- **Fixed the memory cache never expiring uploads**: Tussle.Cache.Memory had an
+  expiration sweep, but nothing ever started its timer, so no entry was ever
+  removed and no abandoned partial upload was ever deleted from storage, even
+  though `Upload-Expires` promised otherwise. The cache now runs a periodic
+  `:timer.send_interval/2` sweep every `expiration_period` seconds, removing
+  entries that have reached their `Upload-Expires` time and deleting their
+  files through the configured storage. An entry can therefore outlive its
+  expiry by at most one `expiration_period`. Storage deletion failures are
+  logged and the cache entry is dropped regardless. If a sweep takes longer
+  than `expiration_period`, the sweeps that queued up behind it are discarded
+  and a warning is logged.
 ## v0.4.2
 
 ### Housekeeping

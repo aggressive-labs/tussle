@@ -33,7 +33,7 @@ defmodule Tussle do
   ```elixir
   def deps do
     [
-      {:tussle, "~> 0.4.0"},
+      {:tussle, "~> 0.5.0"},
     ]
   end
   ```

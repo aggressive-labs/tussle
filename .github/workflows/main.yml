@@ -32,7 +32,7 @@ jobs:
             # Toolchain versions come from .mise.toml. build00 is Debian, so tell
             # mise to use Bob's Ubuntu 24.04 OTP build instead of compiling from source.
             - name: Install toolchain with mise
-              uses: jdx/mise-action@b44d12e7d0d8ee7461bb893e1b1993500433185b # v5.2.7
+              uses: jdx/mise-action@236a21c3b91f5db6d4e174b348674a0f0caac06d # v5.2.9
               env:
                   MISE_ERLANG_PRECOMPILED_OS: ubuntu-24.04
               with:
@@ -70,7 +70,7 @@ jobs:
                   echo "ImageOS=${IMAGE_OS}" >> "${GITHUB_ENV}"
 
             - name: Install toolchain with mise
-              uses: jdx/mise-action@b44d12e7d0d8ee7461bb893e1b1993500433185b # v5.2.7
+              uses: jdx/mise-action@236a21c3b91f5db6d4e174b348674a0f0caac06d # v5.2.9
               env:
                   MISE_ERLANG_PRECOMPILED_OS: ubuntu-24.04
               with:
@@ -89,7 +89,7 @@ jobs:
               run: mix hex.build
 
             - name: Create GitHub release
-              uses: softprops/action-gh-release@efb35369e0ad2afab669f228072c1b0d510eae64 # v3.0.3
+              uses: softprops/action-gh-release@8a0cd651e5b2365bd640854a3fa5dfc70e4875f3 # v3.0.4
               with:
                   files: tussle-*.tar
                   generate_release_notes: true
